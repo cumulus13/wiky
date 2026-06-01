@@ -1,9 +1,9 @@
-# 📖 wikiwiki
+# 📖 wiky
 
 > Beautiful Wikipedia in your terminal — with hex colors, emoji, Markdown rendering, and full theme customisation.
 
-[![Crates.io](https://img.shields.io/crates/v/wikiwiki)](https://crates.io/crates/wikiwiki)
-[![docs.rs](https://img.shields.io/docsrs/wikiwiki)](https://docs.rs/wikiwiki)
+[![Crates.io](https://img.shields.io/crates/v/wiky)](https://crates.io/crates/wiky)
+[![docs.rs](https://img.shields.io/docsrs/wiky)](https://docs.rs/wiky)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -29,14 +29,14 @@
 ### From crates.io
 
 ```bash
-cargo install wikiwiki
+cargo install wiky
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/cumulus13/wikiwiki
-cd wikiwiki
+git clone https://github.com/cumulus13/wiky
+cd wiky
 cargo install --path .
 ```
 
@@ -47,51 +47,51 @@ cargo install --path .
 ### Search
 
 ```bash
-wikiwiki search "Rust programming language"
-wikiwiki search "black hole" -n 5        # limit to 5 results
+wiky search "Rust programming language"
+wiky search "black hole" -n 5        # limit to 5 results
 ```
 
 ### Read an article
 
 ```bash
-wikiwiki get "Rust (programming language)"
-wikiwiki get "Linux kernel" --section "History"
+wiky get "Rust (programming language)"
+wiky get "Linux kernel" --section "History"
 ```
 
 ### Quick summary
 
 ```bash
-wikiwiki summary "Python (programming language)"
+wiky summary "Python (programming language)"
 ```
 
 ### Interactive mode (search → pick → read)
 
 ```bash
-wikiwiki i "quantum computing"
+wiky i "quantum computing"
 ```
 
 ### Open in browser
 
 ```bash
-wikiwiki open "Eiffel Tower"
+wiky open "Eiffel Tower"
 ```
 
 ### Categories
 
 ```bash
-wikiwiki categories "Albert Einstein"
+wiky categories "Albert Einstein"
 ```
 
 ### Global flags
 
 ```bash
-wikiwiki --lang id search "Bahasa Jawa"   # Indonesian Wikipedia
-wikiwiki --theme nord get "Tokyo"          # Nord color theme
-wikiwiki --no-color search "moon"          # plain output
-wikiwiki --no-emoji get "Mars"             # no emoji
-wikiwiki --pager get "History of the Internet"  # pipe through less
-wikiwiki --width 120 get "Climate change"  # set terminal width
-wikiwiki --raw search "test"               # raw plain text
+wiky --lang id search "Bahasa Jawa"   # Indonesian Wikipedia
+wiky --theme nord get "Tokyo"          # Nord color theme
+wiky --no-color search "moon"          # plain output
+wiky --no-emoji get "Mars"             # no emoji
+wiky --pager get "History of the Internet"  # pipe through less
+wiky --width 120 get "Climate change"  # set terminal width
+wiky --raw search "test"               # raw plain text
 ```
 
 ---
@@ -101,13 +101,13 @@ wikiwiki --raw search "test"               # raw plain text
 ### View / edit config
 
 ```bash
-wikiwiki config show          # show current settings
-wikiwiki config path          # print config file location
-wikiwiki config set lang id   # switch to Indonesian Wikipedia
-wikiwiki config set theme nord
-wikiwiki config set pager true
-wikiwiki config set results_count 5
-wikiwiki config reset         # restore defaults
+wiky config show          # show current settings
+wiky config path          # print config file location
+wiky config set lang id   # switch to Indonesian Wikipedia
+wiky config set theme nord
+wiky config set pager true
+wiky config set results_count 5
+wiky config reset         # restore defaults
 ```
 
 ### Config file (TOML)
@@ -116,9 +116,9 @@ The config file is automatically created at:
 
 | Platform | Path |
 |---|---|
-| Linux | `~/.config/wikiwiki/config.toml` |
-| macOS | `~/Library/Application Support/wikiwiki/config.toml` |
-| Windows | `%APPDATA%\wikiwiki\config.toml` |
+| Linux | `~/.config/wiky/config.toml` |
+| macOS | `~/Library/Application Support/wiky/config.toml` |
+| Windows | `%APPDATA%\wiky\config.toml` |
 
 ```toml
 language       = "en"        # Wikipedia language code
@@ -151,8 +151,8 @@ dim            = "#5C6370"
 ### Set custom theme colors inline
 
 ```bash
-wikiwiki config set custom_theme.title "#FF6600"
-wikiwiki config set theme custom
+wiky config set custom_theme.title "#FF6600"
+wiky config set theme custom
 ```
 
 ---
@@ -160,7 +160,7 @@ wikiwiki config set theme custom
 ## 🎨 Themes
 
 ```bash
-wikiwiki themes    # list all themes
+wiky themes    # list all themes
 ```
 
 | Name | Description |
@@ -180,14 +180,14 @@ Add to `Cargo.toml`:
 
 ```toml
 [dependencies]
-wikiwiki = "0.1"
+wiky = "0.1"
 tokio = { version = "1", features = ["full"] }
 ```
 
 ### Basic example
 
 ```rust
-use wikiwiki::{WikiClient, Config};
+use wiky::{WikiClient, Config};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -213,7 +213,7 @@ async fn main() -> anyhow::Result<()> {
 ### Custom theme
 
 ```rust
-use wikiwiki::{Config, Renderer, Theme};
+use wiky::{Config, Renderer, Theme};
 
 let mut config = Config::default();
 config.theme = "custom".into();
@@ -222,13 +222,13 @@ config.custom_theme.heading = "#00BFFF".into();
 
 let theme    = config.active_theme();
 let renderer = Renderer::new(theme, 100, true);
-renderer.print_message("Hello from wikiwiki! 📖");
+renderer.print_message("Hello from wiky! 📖");
 ```
 
 ### Hex color utilities
 
 ```rust
-use wikiwiki::theme::{hex_to_rgb, colorize_hex};
+use wiky::theme::{hex_to_rgb, colorize_hex};
 
 let (r, g, b) = hex_to_rgb("#61AFEF").unwrap();    // (97, 175, 239)
 let colored   = colorize_hex("Hello!", "#E06C75");  // red-ish truecolor string
@@ -240,7 +240,7 @@ println!("{colored}");
 ## 🏗️ Architecture
 
 ```
-wikiwiki/
+wiky/
 ├── src/
 │   ├── lib.rs      — public API, re-exports
 │   ├── main.rs     — CLI binary (clap subcommands)
@@ -300,7 +300,7 @@ MIT © 2024 Hadi Cahyadi — [cumulus13@gmail.com](mailto:cumulus13@gmail.com)
 
 ## 🔗 Links
 
-- **Homepage / Source:** https://github.com/cumulus13/wikiwiki
+- **Homepage / Source:** https://github.com/cumulus13/wiky
 - **Wikipedia API:** https://www.mediawiki.org/wiki/API:Main_page
 - **confy** (config crate): https://crates.io/crates/confy
 - **colored** (terminal colors): https://crates.io/crates/colored

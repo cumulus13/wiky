@@ -20,16 +20,16 @@ jobs:
         include:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            binary_name: wikiwiki.exe
-            artifact_name: wikiwiki-win
+            binary_name: wiky.exe
+            artifact_name: wiky-win
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            binary_name: wikiwiki
-            artifact_name: wikiwiki-linux
+            binary_name: wiky
+            artifact_name: wiky-linux
           - os: macos-latest
             target: x86_64-apple-darwin
-            binary_name: wikiwiki
-            artifact_name: wikiwiki-macos
+            binary_name: wiky
+            artifact_name: wiky-macos
     
     steps:
       - uses: actions/checkout@v4
@@ -80,20 +80,20 @@ jobs:
       - name: Prepare release assets
         run: |
           # Windows
-          mv dist/wikiwiki-win/wikiwiki.exe dist/wikiwiki-${{ github.ref_name }}-x86_64-pc-windows-msvc.exe
+          mv dist/wiky-win/wiky.exe dist/wiky-${{ github.ref_name }}-x86_64-pc-windows-msvc.exe
           
           # Linux
-          mv dist/wikiwiki-linux/wikiwiki dist/wikiwiki-${{ github.ref_name }}-x86_64-unknown-linux-gnu
-          chmod +x dist/wikiwiki-${{ github.ref_name }}-x86_64-unknown-linux-gnu
+          mv dist/wiky-linux/wiky dist/wiky-${{ github.ref_name }}-x86_64-unknown-linux-gnu
+          chmod +x dist/wiky-${{ github.ref_name }}-x86_64-unknown-linux-gnu
           
           # macOS
-          mv dist/wikiwiki-macos/wikiwiki dist/wikiwiki-${{ github.ref_name }}-x86_64-apple-darwin
-          chmod +x dist/wikiwiki-${{ github.ref_name }}-x86_64-apple-darwin
+          mv dist/wiky-macos/wiky dist/wiky-${{ github.ref_name }}-x86_64-apple-darwin
+          chmod +x dist/wiky-${{ github.ref_name }}-x86_64-apple-darwin
 
       - name: Generate SHA-256 checksums
         run: |
           cd dist
-          for file in wikiwiki-*; do
+          for file in wiky-*; do
             if [ -f "$file" ] && [ "${file##*.}" != "sha256" ]; then
               sha256sum "$file" > "${file}.sha256"
               echo "SHA256 ($file): $(cat ${file}.sha256 | cut -d' ' -f1)"
@@ -103,28 +103,28 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "wikiwiki ${{ github.ref_name }}"
+          name: "wiky ${{ github.ref_name }}"
           tag_name: ${{ github.ref_name }}
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}
           generate_release_notes: true
           body: |
-            ## wikiwiki ${{ github.ref_name }}
+            ## wiky ${{ github.ref_name }}
 
             ### Installation
 
             #### Windows
-            Download `wikiwiki-${{ github.ref_name }}-x86_64-pc-windows-msvc.exe` and place it anywhere on your `%PATH%`.
+            Download `wiky-${{ github.ref_name }}-x86_64-pc-windows-msvc.exe` and place it anywhere on your `%PATH%`.
 
             #### Linux
-            Download `wikiwiki-${{ github.ref_name }}-x86_64-unknown-linux-gnu`, make it executable with `chmod +x`, and move it to a directory in your `$PATH` (e.g., `/usr/local/bin`).
+            Download `wiky-${{ github.ref_name }}-x86_64-unknown-linux-gnu`, make it executable with `chmod +x`, and move it to a directory in your `$PATH` (e.g., `/usr/local/bin`).
 
             #### macOS
-            Download `wikiwiki-${{ github.ref_name }}-x86_64-apple-darwin`, make it executable with `chmod +x`, and move it to a directory in your `$PATH`.
+            Download `wiky-${{ github.ref_name }}-x86_64-apple-darwin`, make it executable with `chmod +x`, and move it to a directory in your `$PATH`.
 
             #### Via cargo
             ```bash
-            cargo install wikiwiki
+            cargo install wiky
             ```
 
             ### SHA-256 Checksums
@@ -132,7 +132,7 @@ jobs:
             ${{ toJSON(steps.generate.outputs.checksums) }}
             ```
           files: |
-            dist/wikiwiki-*
+            dist/wiky-*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

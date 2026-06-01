@@ -1,12 +1,12 @@
 [package]
-name = "wikiwiki"
-version = "0.1.1"
+name = "wiky"
+version = "0.1.2"
 edition = "2021"
 rust-version = "1.75"
 authors = ["Hadi Cahyadi <cumulus13@gmail.com>"]
 description = "A beautiful, colorful Wikipedia CLI with full Markdown rendering, emoji support, and customizable themes"
-homepage = "https://github.com/cumulus13/wikiwiki"
-repository = "https://github.com/cumulus13/wikiwiki"
+homepage = "https://github.com/cumulus13/wiky"
+repository = "https://github.com/cumulus13/wiky"
 license = "MIT"
 keywords = ["wikipedia", "cli", "terminal", "colors", "markdown"]
 categories = ["command-line-utilities", "text-processing"]
@@ -14,12 +14,12 @@ readme = "README.md"
 exclude = [".github", "tests"]
 
 [lib]
-name = "wikiwiki"
+name = "wiky"
 path = "src/lib.rs"
 doc = true
 
 [[bin]]
-name = "wikiwiki"
+name = "wiky"
 path = "src/main.rs"
 
 [dependencies]
