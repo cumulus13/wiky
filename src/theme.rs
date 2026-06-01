@@ -1,4 +1,4 @@
-//! Theme system for wikiwiki.
+//! Theme system for wiky.
 //!
 //! Provides hex-color parsing, built-in themes (dark/light/solarized/nord/custom),
 //! and helpers to apply truecolor ANSI codes to terminal output — effectively
@@ -15,7 +15,7 @@ use crate::error::WikiError;
 ///
 /// # Examples
 /// ```
-/// use wikiwiki::theme::hex_to_rgb;
+/// use wiky::theme::hex_to_rgb;
 /// assert_eq!(hex_to_rgb("#ff6600").unwrap(), (255, 102, 0));
 /// assert_eq!(hex_to_rgb("#f60").unwrap(),    (255, 102, 0));
 /// ```
@@ -64,7 +64,7 @@ pub fn bg_hex<S: AsRef<str>>(text: S, hex: &str) -> ColoredString {
 
 // ─── Theme definition ─────────────────────────────────────────────────────────
 
-/// A complete color theme for wikiwiki terminal output.
+/// A complete color theme for wiky terminal output.
 ///
 /// All color values are hex strings (`#RRGGBB`).
 #[derive(Debug, Clone, Serialize, Deserialize)]

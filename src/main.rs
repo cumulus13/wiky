@@ -1,7 +1,7 @@
-//! wikiwiki — Wikipedia CLI
+//! wiky — Wikipedia CLI
 //!
 //! Author:   Hadi Cahyadi <cumulus13@gmail.com>
-//! Homepage: https://github.com/cumulus13/wikiwiki
+//! Homepage: https://github.com/cumulus13/wiky
 
 use std::process;
 
@@ -10,35 +10,35 @@ use colored::control::set_override as set_color_override;
 use indicatif::{ProgressBar, ProgressStyle};
 use minus::Pager;
 
-use wikiwiki::{Config, Renderer, WikiClient, WikiError};
+use wiky::{Config, Renderer, WikiClient, WikiError};
 
 // ─── CLI ─────────────────────────────────────────────────────────────────────
 
-/// 📖 wikiwiki — Beautiful Wikipedia in your terminal.
+/// 📖 wiky — Beautiful Wikipedia in your terminal.
 ///
 /// Supports hex colors, emoji, Markdown rendering, and customizable themes.
 #[derive(Parser)]
 #[command(
-    name    = "wikiwiki",
+    name    = "wiky",
     version = env!("CARGO_PKG_VERSION"),
     author  = "Hadi Cahyadi <cumulus13@gmail.com>",
     about   = "📖 Beautiful Wikipedia in your terminal",
     long_about = "\
-wikiwiki searches and displays Wikipedia articles with colors, emoji and Markdown.\n\
+wiky searches and displays Wikipedia articles with colors, emoji and Markdown.\n\
 \n\
 EXAMPLES:\n\
-  wikiwiki search \"Rust programming language\"\n\
-  wikiwiki get \"Rust (programming language)\"\n\
-  wikiwiki get \"Linux kernel\" --section History\n\
-  wikiwiki summary \"Python (programming language)\"\n\
-  wikiwiki i \"coldplay\"               # interactive: search → pick → read\n\
-  wikiwiki open \"Eiffel Tower\"\n\
-  wikiwiki --pager get \"History of the Internet\"\n\
-  wikiwiki --theme nord --lang de search \"Berlin\"\n\
-  wikiwiki config show\n\
-  wikiwiki config set theme dracula\n\
-  wikiwiki config set custom_theme.title \"#FF6600\"\n\
-  wikiwiki themes\n\
+  wiky search \"Rust programming language\"\n\
+  wiky get \"Rust (programming language)\"\n\
+  wiky get \"Linux kernel\" --section History\n\
+  wiky summary \"Python (programming language)\"\n\
+  wiky i \"coldplay\"               # interactive: search → pick → read\n\
+  wiky open \"Eiffel Tower\"\n\
+  wiky --pager get \"History of the Internet\"\n\
+  wiky --theme nord --lang de search \"Berlin\"\n\
+  wiky config show\n\
+  wiky config set theme dracula\n\
+  wiky config set custom_theme.title \"#FF6600\"\n\
+  wiky themes\n\
 ",
     propagate_version = true,
 )]
@@ -47,11 +47,11 @@ struct Cli {
     command: Commands,
 
     /// Wikipedia language code, e.g. en, id, de, ja (overrides config).
-    #[arg(short = 'l', long, global = true, env = "WIKIWIKI_LANG")]
+    #[arg(short = 'l', long, global = true, env = "wiky_LANG")]
     lang: Option<String>,
 
     /// Color theme: dark | light | solarized | nord | dracula | custom.
-    #[arg(short = 't', long, global = true, env = "WIKIWIKI_THEME")]
+    #[arg(short = 't', long, global = true, env = "wiky_THEME")]
     theme: Option<String>,
 
     /// Terminal column width override (0 = auto-detect).
@@ -87,7 +87,7 @@ enum Commands {
     Open(OpenCmd),
     /// 🏷️  Show Wikipedia categories for an article.
     Categories(CategoriesCmd),
-    /// ⚙️  Manage wikiwiki configuration.
+    /// ⚙️  Manage wiky configuration.
     Config(ConfigCmd),
     /// 🎨 List available color themes.
     Themes,
@@ -142,7 +142,7 @@ struct ConfigCmd {
 enum ConfigAction {
     /// Show current configuration and config file path.
     Show,
-    /// Set a key: `wikiwiki config set <key> <value>`.
+    /// Set a key: `wiky config set <key> <value>`.
     Set { key: String, value: String },
     /// Reset all settings to defaults.
     Reset,
@@ -254,7 +254,7 @@ async fn run_get(cmd: GetCmd, config: &Config, renderer: &Renderer) -> Result<()
     sp.finish_and_clear();
 
     let article = if let Some(kw) = &cmd.section {
-        wikiwiki::prelude::Article {
+        wiky::prelude::Article {
             content: filter_section(&article.content, kw),
             ..article
         }
@@ -359,7 +359,7 @@ async fn run_interactive(
 /// the user can pick which meaning they want. Recurses (via Box::pin) until a
 /// real article is rendered or the user enters 0 to quit.
 fn fetch_and_display<'a>(
-    article: wikiwiki::prelude::Article,
+    article: wiky::prelude::Article,
     client: &'a WikiClient,
     config: &'a Config,
     renderer: &'a Renderer,
@@ -411,7 +411,7 @@ fn fetch_and_display<'a>(
                     if next.title == current.title {
                         sp.finish_and_clear();
                         renderer.print_message(&format!(
-                            "Tip: try `wikiwiki search \"{}\"`  to find the exact article.",
+                            "Tip: try `wiky search \"{}\"`  to find the exact article.",
                             opt.description
                         ));
                         return Ok(());
@@ -423,7 +423,7 @@ fn fetch_and_display<'a>(
                     // Title guess failed — suggest a search instead
                     renderer.print_error(&format!(
                         "Could not find an article for \"{}\". \
-Try: wikiwiki search \"{}\", {}\",",
+Try: wiky search \"{}\", {}\",",
                         opt.title, current.title, opt.description
                     ));
                     return Ok(());
@@ -501,11 +501,11 @@ fn apply_config_set(config: &mut Config, key: &str, value: &str) -> Result<(), W
 }
 
 fn apply_theme_field(
-    theme: &mut wikiwiki::Theme,
+    theme: &mut wiky::Theme,
     field: &str,
     value: &str,
 ) -> Result<(), WikiError> {
-    wikiwiki::theme::hex_to_rgb(value)?; // validates hex first
+    wiky::theme::hex_to_rgb(value)?; // validates hex first
     let v = value.to_string();
     match field {
         "title" => theme.title = v,

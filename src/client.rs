@@ -188,7 +188,7 @@ pub struct DisambigOption {
 ///
 /// # Example
 /// ```rust,no_run
-/// use wikiwiki::{WikiClient, Config};
+/// use wiky::{WikiClient, Config};
 ///
 /// #[tokio::main]
 /// async fn main() -> anyhow::Result<()> {
@@ -209,9 +209,9 @@ impl WikiClient {
     pub fn new(config: Config) -> Result<Self, WikiError> {
         let http = Client::builder()
             .user_agent(concat!(
-                "wikiwiki/",
+                "wiky/",
                 env!("CARGO_PKG_VERSION"),
-                " (https://github.com/cumulus13/wikiwiki)"
+                " (https://github.com/cumulus13/wiky)"
             ))
             .timeout(std::time::Duration::from_secs(30))
             .build()?;

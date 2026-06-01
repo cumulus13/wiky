@@ -1,13 +1,13 @@
-//! User configuration for wikiwiki.
+//! User configuration for wiky.
 //!
 //! Config is stored as TOML using [`confy`], which automatically places the file
 //! in the OS-appropriate location:
 //!
 //! | Platform | Path |
 //! |----------|------|
-//! | Linux    | `~/.config/wikiwiki/config.toml` |
-//! | macOS    | `~/Library/Application Support/wikiwiki/config.toml` |
-//! | Windows  | `%APPDATA%\wikiwiki\config.toml` |
+//! | Linux    | `~/.config/wiky/config.toml` |
+//! | macOS    | `~/Library/Application Support/wiky/config.toml` |
+//! | Windows  | `%APPDATA%\wiky\config.toml` |
 //!
 //! # Example config file
 //!
@@ -44,7 +44,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::WikiError;
 use crate::theme::Theme;
 
-const APP_NAME: &str = "wikiwiki";
+const APP_NAME: &str = "wiky";
 
 /// Top-level user configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]

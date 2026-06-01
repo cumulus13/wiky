@@ -1,4 +1,4 @@
-//! # wikiwiki
+//! # wiky
 //!
 //! A beautiful, colorful Wikipedia CLI and library with full Markdown rendering,
 //! emoji support, hex color theming, and a TOML-based config system.
@@ -6,7 +6,7 @@
 //! ## Library Usage
 //!
 //! ```rust,no_run
-//! use wikiwiki::{WikiClient, Config};
+//! use wiky::{WikiClient, Config};
 //!
 //! #[tokio::main]
 //! async fn main() -> anyhow::Result<()> {

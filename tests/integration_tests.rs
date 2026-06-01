@@ -1,8 +1,8 @@
-//! Integration tests for wikiwiki.
+//! Integration tests for wiky.
 
-use wikiwiki::client::strip_html;
-use wikiwiki::config::Config;
-use wikiwiki::theme::{hex_to_rgb, Theme};
+use wiky::client::strip_html;
+use wiky::config::Config;
+use wiky::theme::{hex_to_rgb, Theme};
 
 // ─── Theme tests ───────────────────────────────────────────────────────────────
 

@@ -1,8 +1,8 @@
-//! Error types for wikiwiki.
+//! Error types for wiky.
 
 use thiserror::Error;
 
-/// All errors that can occur in wikiwiki.
+/// All errors that can occur in wiky.
 #[derive(Debug, Error)]
 pub enum WikiError {
     /// Network or HTTP error when calling the Wikipedia API.

@@ -37,12 +37,12 @@ const EMOJI_OK: &str = "✅";
 ///
 /// # Example
 /// ```rust,no_run
-/// use wikiwiki::{Config, Renderer};
+/// use wiky::{Config, Renderer};
 ///
 /// let config  = Config::default();
 /// let theme   = config.active_theme();
 /// let renderer = Renderer::stdout(theme, 100, true);
-/// renderer.print_message("Hello, wikiwiki! ✨");
+/// renderer.print_message("Hello, wiky! ✨");
 /// ```
 pub struct Renderer {
     theme: Theme,
@@ -159,7 +159,7 @@ impl Renderer {
     /// Render current config settings to stdout.
     pub fn render_config_info(&self, config: &Config) {
         println!();
-        println!("{}", self.theme.title("⚙️  wikiwiki Configuration"));
+        println!("{}", self.theme.title("⚙️  wiky Configuration"));
         println!("{}", self.theme.separator(self.sep_line()));
         let rows = [
             ("language", config.language.clone()),
@@ -202,7 +202,7 @@ impl Renderer {
         println!(
             "{}",
             self.theme
-                .dim("  Set theme: wikiwiki config set theme <name>")
+                .dim("  Set theme: wiky config set theme <name>")
         );
         println!();
     }
@@ -351,7 +351,7 @@ impl Renderer {
             w,
             "{}",
             self.theme
-                .dim("  tip: use `wikiwiki get \"<title>\"` to read an article")
+                .dim("  tip: use `wiky get \"<title>\"` to read an article")
         )?;
         writeln!(w)?;
         Ok(())
